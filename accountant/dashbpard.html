@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School_MIS Dashboard</title>
+    <style>
+        :root {
+            --primary: #7b32ce;
+            --primary-light: #9d5ce0;
+            --primary-dark: #5b1e9e;
+            --secondary: #264da1;
+            --accent: #8ab4f8;
+            --bg-light: #f5f7ff;
+            --bg-dark: #121638;
+            --text-light: #e8eaed;
+            --text-dark: #1a1a1a;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --info: #2196f3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+            color: var(--text-light);
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--accent);
+        }
+
+        .sidebar-menu a img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .topbar {
+            background-color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .toggle-sidebar {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: none;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-light);
+            border-radius: 25px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-container input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .search-container img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .action-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .action-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-content {
+            padding: 25px;
+        }
+
+        .welcome-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .stat-icon.students {
+            background-color: rgba(123, 50, 206, 0.1);
+        }
+
+        .stat-icon.staff {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .stat-icon.classes {
+            background-color: rgba(255, 152, 0, 0.1);
+        }
+
+        .stat-icon.finance {
+            background-color: rgba(33, 150, 243, 0.1);
+        }
+
+        .stat-icon img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .stat-details {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .dashboard-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            top: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .card-action {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .attendance-chart {
+            height: 250px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bar {
+            width: 100%;
+            background-color: var(--primary-light);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.3s ease;
+        }
+
+        .day {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .recent-activity {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .icon-blue {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: var(--info);
+        }
+
+        .icon-green {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .icon-orange {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .icon-red {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .activity-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .upcoming-events {
+            list-style: none;
+        }
+
+        .event-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .event-day {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .event-month {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .event-time {
+            font-size: 0.8rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .event-time img {
+            width: 14px;
+            height: 14px;
+            margin-right: 5px;
+        }
+
+        /* Quick Links Section */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .quick-link:hover .quick-link-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .quick-link-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .quick-link-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .quick-link-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .toggle-sidebar {
+                display: block;
+            }
+            
+            .search-container {
+                width: auto;
+                flex: 1;
+                margin: 0 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .topbar-actions {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/Screenshot 2025-04-27 212118.png" alt="School_MIS Logo">
+            <h1>School_MIS</h1>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Dashboard Icon"> Dashboard</a></li>
+            <li><a href="#"><img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Students Icon"> Students</a></li>
+            <li><a href="#"><img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Teachers Icon"> Teachers</a></li>
+            <li><a href="#"><img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Classes Icon"> Classes</a></li>
+            <li><a href="#"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Attendance Icon"> Attendance</a></li>
+            <li><a href="#"><img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Examination Icon"> Examinations</a></li>
+            <li><a href="reports.html"><img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Reports Icon"> Reports</a></li>
+            <li><a href="#"><img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Finance Icon"> Finance</a></li>
+            <li><a href="#"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Library Icon"> Library</a></li>
+            <li><a href="#"><img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Communication Icon"> Communication</a></li>
+            <li><a href="#"><img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon"> Settings</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="User Avatar">
+                <div>
+                    <div class="user-name">John Smith</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <button class="toggle-sidebar">☰</button>
+            
+            <div class="search-container">
+                <img src="../assets/images/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Search Icon">
+                <input type="text" placeholder="Search...">
+            </div>
+            
+            <div class="topbar-actions">
+                <div class="action-icon">
+                    <img src="../assets/images/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Notification Icon">
+                    <span class="badge">3</span>
+                </div>
+                <div class="action-icon">
+                    <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Message Icon">
+                    <span class="badge">5</span>
+                </div>
+                <div class="action-icon">
+                    <img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="welcome-header">
+                <div class="greeting">Welcome back, John!</div>
+                <div class="date">Sunday, April 27, 2025</div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-details">
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Total Students</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-details">
+                        <div class="stat-value">86</div>
+                        <div class="stat-label">Teachers & Staff</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-details">
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">Active Classes</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Links Section -->
+            <div class="quick-links">
+                <a href="reports.html" class="quick-link">
+                    <div class="quick-link-title">Reports</div>
+                    <div class="quick-link-description">View and generate reports</div>
+                </a>
+                
+                <a href="#" class="quick-link">
+                    <div class="quick-link-title">Add Student</div>
+                    <div class="quick-link-description">Register a new student</div>
+                </a>
+                
+                <a href="#" class="quick-link">
+                    <div class="quick-link-title">Take Attendance</div>
+                    <div class="quick-link-description">Mark daily attendance</div>
+                </a>
+                
+                <a href="#" class="quick-link">
+                    <div class="quick-link-title">Results</div>
+                    <div class="quick-link-description">Manage exam results</div>
+                </a>
+            </div>
+            
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Left Column -->
+                <div>
+                    <!-- Attendance Overview Card -->
+                    <div class="dashboard-card" style=" border: 1px solid #e5e7eb;
+                    border-radius: 8px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                    background-color: white;
+                    overflow: hidden;">
+                        <div class="card-header" style="   .card-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 16px;
+                            border-bottom: 1px solid #e5e7eb;
+                        }">
+                            <div class="card-title" style="font-weight: 500;">Weekly Attendance Overview</div>
+                            <a href="#" class="card-action" style="color: #4f46e5;
+                            text-decoration: none;
+                            font-size: 14px;">View Details</a>
+                        </div>
+                        <div class="card-content" style="padding: 16px;">
+                            <div class="attendance-chart" style="height: 250px;">
+                              <canvas id="attendanceChart" style="width: 100%; height: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity Card -->
+                    <div class="dashboard-card" style="position: relative;top: 2rem;">
+                        <div class="card-header">
+                            <div class="card-title">Recent Activity</div>
+                            <a href="#" class="card-action">View All</a>
+                        </div>
+                        <div class="card-content">
+                            <ul class="recent-activity">
+                                <li class="activity-item">
+                                    <div class="activity-details">
+                                        <div class="activity-title">New student registration completed</div>
+                                        <div class="activity-time">10 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-details">
+                                        <div class="activity-title">Monthly attendance report generated</div>
+                                        <div class="activity-time">2 hours ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-details">
+                                        <div class="activity-title">Fee payment received from Sarah Johnson</div>
+                                        <div class="activity-time">5 hours ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                 
+                                    <div class="activity-details">
+                                        <div class="activity-title">System maintenance scheduled for tonight</div>
+                                        <div class="activity-time">Yesterday</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div>
+                    <!-- Upcoming Events Card -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Upcoming Events</div>
+                            <a href="#" class="card-action">View Calendar</a>
+                        </div>
+                        <div class="card-content">
+                            <ul class="upcoming-events">
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">28</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Staff Meeting</div>
+                                        <div class="event-time">
+                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
+                                            10:00 AM - 12:00 PM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">30</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Science Fair</div>
+                                        <div class="event-time">
+                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
+                                            9:00 AM - 3:00 PM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">02</div>
+                                        <div class="event-month">May</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Parent-Teacher Conference</div>
+                                        <div class="event-time">
+                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
+                                            4:00 PM - 7:00 PM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">05</div>
+                                        <div class="event-month">May</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Board Meeting</div>
+                                        <div class="event-time">
+                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
+                                            1:00 PM - 3:00 PM
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- To-Do List Card -->
+                    <div class="dashboard-card" style="position: relative;top: 2rem;">
+                        <div class="card-header">
+                            <div class="card-title">To-Do List</div>
+                            <a href="#" class="card-action">Add New</a>
+                        </div>
+                        <div class="card-content">
+                            <ul class="recent-activity">
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-blue">
+                                        <!-- <img src="/api/placeholder/20/20" alt="Task Icon"> -->
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Review quarterly budget report</div>
+                                        <div class="activity-time">Due today</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-green">
+                                        <!-- <img src="/api/placeholder/20/20" alt="Task Icon"> -->
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Sign off on new textbook orders</div>
+                                        <div class="activity-time">Due tomorrow</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-orange">
+                                        <!-- <img src="/api/placeholder/20/20" alt="Task Icon"> -->
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Prepare for board meeting presentation</div>
+                                        <div class="activity-time">Due in 3 days</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.querySelector('.toggle-sidebar');
+            
+            if (window.innerWidth <= 768 && !sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+         // Wait for DOM to be fully loaded
+         document.addEventListener('DOMContentLoaded', function() {
+            // Get canvas element
+            const ctx = document.getElementById('attendanceChart').getContext('2d');
+            
+            // Sample attendance data (percentages)
+            const attendanceData = {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                datasets: [
+                    {
+                        label: 'Attendance %',
+                        data: [85, 92, 78, 88, 72],
+                        backgroundColor: '#4f46e5', // Indigo color
+                        borderRadius: 4,
+                        borderWidth: 0,
+                    }
+                ]
+            };
+            
+            // Create chart
+            const attendanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: attendanceData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Attendance: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: {
+                                display: true,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>

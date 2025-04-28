@@ -1,0 +1,80 @@
+/* General Styling */
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 40px;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+table {
+    font-size: 14px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+/* Alternate Row Color */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* School Logo */
+.school_log {
+    text-align: left;
+}
+
+.school_log img {
+    width: 120px;
+    height: auto;
+}
+
+.school_log p {
+    font-size: 14px;
+}
+
+/* Identity Section */
+.Identity {
+   position: relative;
+   bottom: 250px;
+   left: 790px;
+}
+
+/* Header and Footer Styling */
+h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Scores Table */
+.scores {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.scores td {
+    padding: 10px;
+}
+
+/* Add hover effect to rows */
+tr:hover {
+    background-color: #ddd;
+}

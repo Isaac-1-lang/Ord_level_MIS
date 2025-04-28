@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accountant Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            padding: 20px;
+            background: linear-gradient(135deg, #f4f7fc, #e0e7ff);
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3400ff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #3400ff;
+        }
+
+        .email-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #3400ff;
+            outline: none;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .send-btn {
+            padding: 12px;
+            background: linear-gradient(135deg, #3400ff, #5721fb);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: linear-gradient(135deg, #5721fb, #3400ff);
+            transform: translateY(-2px);
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .popup button {
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: #3400ff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <a href="./s6.html" class="back-link">← Back to Student List</a>
+        <h1>Send Payment Reminder</h1>
+        <form class="email-form" onsubmit="sendEmail(event)">
+            <div class="form-group">
+                <label for="recipient">Parent's Email</label>
+                <input type="email" id="recipient" required placeholder="Enter parent's email">
+            </div>
+            <div class="form-group">
+                <label for="student">Student Name</label>
+                <input type="text" id="student" required placeholder="Enter student name">
+            </div>
+            <div class="form-group">
+                <label for="amount">Remaining Amount</label>
+                <input type="text" id="amount" required placeholder="e.g., 30,000Frw">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Enter your message here" required>Dear Parent,
+
+We hope this message finds you well. This is a reminder that there is an outstanding balance of [amount] for [student]'s school fees. Please make the payment at your earliest convenience.
+
+Thank you,
+School Administration</textarea>
+            </div>
+            <button type="submit" class="send-btn">Send Email</button>
+        </form>
+    </div>
+
+    <div class="popup" id="popup">
+        <span id="popup-message"></span>
+        <button onclick="hidePopup()">Close</button>
+    </div>
+
+    <script>
+        function sendEmail(event) {
+            event.preventDefault();
+            const recipient = document.getElementById('recipient').value;
+            const student = document.getElementById('student').value;
+            const amount = document.getElementById('amount').value;
+            const message = document.getElementById('message').value;
+
+            const subject = `School Fees Reminder for ${student}`;
+            const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message.replace('[student]', student).replace('[amount]', amount))}`;
+            
+            showPopup('Opening email client...');
+            window.location.href = mailtoLink;
+            
+            setTimeout(() => {
+                hidePopup();
+                document.querySelector('.email-form').reset();
+            }, 2000);
+        }
+
+        function showPopup(message) {
+            document.getElementById('popup-message').textContent = message;
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

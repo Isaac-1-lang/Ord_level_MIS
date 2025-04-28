@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Fees Management</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            padding: 20px;
+            background: linear-gradient(135deg, #f4f7fc, #e0e7ff);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header h1 {
+            color: #3400ff;
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            padding: 10px 20px;
+            background: #3400ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: #5721fb;
+        }
+
+        .filter-container {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-input, .class-filter {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-input:focus, .class-filter:focus {
+            border-color: #3400ff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 0, 255, 0.2);
+        }
+
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: linear-gradient(135deg, #3400ff, #5721fb);
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:hover {
+            background-color: #f8f9ff;
+            transition: background 0.3s ease;
+        }
+
+        .remaining {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+
+        .zero {
+            color: #2ecc71;
+        }
+
+        .action-buttons button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #2980b9;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .student-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .search-input, .class-filter {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>School Fees Management</h1>
+            <div class="nav-links">
+                <a href="#" id="addStudentBtn">Add Student</a>
+            </div>
+        </div>
+        
+        <div class="filter-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search by student name...">
+            <select class="class-filter" id="classFilter">
+                <option value="">All Classes</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+                <option value="S3">S3</option>
+                <option value="S4">S4</option>
+                <option value="S5">S5</option>
+                <option value="S6">S6</option>
+            </select>
+        </div>
+
+        <table class="student-table" id="studentTable">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Class</th>
+                <th>First Term</th>
+                <th>Second Term</th>
+                <th>Last Term</th>
+                <th>Rem. First</th>
+                <th>Rem. Second</th>
+                <th>Rem. Last</th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>S1 A</td>
+                <td>75,000Frw</td>
+                <td>80,000Frw</td>
+                <td>90,000Frw</td>
+                <td class="remaining">30,000Frw</td>
+                <td class="remaining">10,000Frw</td>
+                <td class="remaining">5,000Frw</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Alice</td>
+                <td>Mugabe</td>
+                <td>S1 B</td>
+                <td>70,000Frw</td>
+                <td>75,000Frw</td>
+                <td>85,000Frw</td>
+                <td class="remaining">15,000Frw</td>
+                <td class="zero">0</td>
+                <td class="remaining">5,000Frw</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Peter</td>
+                <td>Kamau</td>
+                <td>S1 C</td>
+                <td>65,000Frw</td>
+                <td>70,000Frw</td>
+                <td>80,000Frw</td>
+                <td class="zero">0</td>
+                <td class="remaining">8,000Frw</td>
+                <td class="remaining">3,000Frw</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Michael</td>
+                <td>Johnson</td>
+                <td>S2 A</td>
+                <td>80,000Frw</td>
+                <td>90,000Frw</td>
+                <td>100,000Frw</td>
+                <td class="remaining">20,000Frw</td>
+                <td class="remaining">5,000Frw</td>
+                <td class="zero">0</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Emily</td>
+                <td>Williams</td>
+                <td>S2 B</td>
+                <td>70,000Frw</td>
+                <td>75,000Frw</td>
+                <td>88,000Frw</td>
+                <td class="remaining">10,000Frw</td>
+                <td class="remaining">3,000Frw</td>
+                <td class="remaining">2,000Frw</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Sophia</td>
+                <td>Nyaga</td>
+                <td>S2 C</td>
+                <td>85,000Frw</td>
+                <td>95,000Frw</td>
+                <td>105,000Frw</td>
+                <td class="remaining">25,000Frw</td>
+                <td class="remaining">10,000Frw</td>
+                <td class="remaining">5,000Frw</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Sarah</td>
+                <td>Miller</td>
+                <td>S3 B</td>
+                <td>90,000Frw</td>
+                <td>95,000Frw</td>
+                <td>105,000Frw</td>
+                <td class="zero">0</td>
+                <td class="zero">0</td>
+                <td class="zero">0</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>David</td>
+                <td>Rwanda</td>
+                <td>S3 A</td>
+                <td>85,000Frw</td>
+                <td>90,000Frw</td>
+                <td>100,000Frw</td>
+                <td class="remaining">15,000Frw</td>
+                <td class="remaining">5,000Frw</td>
+                <td class="remaining">2,000Frw</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Linda</td>
+                <td>Mutesi</td>
+                <td>S3 C</td>
+                <td>88,000Frw</td>
+                <td>92,000Frw</td>
+                <td>102,000Frw</td>
+                <td class="remaining">10,000Frw</td>
+                <td class="zero">0</td>
+                <td class="remaining">3,000Frw</td>
+                <td class="action-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="modal" id="studentModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add/Edit Student Fees</h2>
+            <form id="studentForm">
+                <input type="text" id="firstName" placeholder="First Name" required>
+                <input type="text" id="lastName" placeholder="Last Name" required>
+                <input type="text" id="class" placeholder="Class (e.g., S1 A)" required>
+                <input type="text" id="firstTerm" placeholder="First Term (Frw)" required>
+                <input type="text" id="secondTerm" placeholder="Second Term (Frw)" required>
+                <input type="text" id="lastTerm" placeholder="Last Term (Frw)" required>
+                <input type="text" id="remFirst" placeholder="Remaining First (Frw)">
+                <input type="text" id="remSecond" placeholder="Remaining Second (Frw)">
+                <input type="text" id="remLast" placeholder="Remaining Last (Frw)">
+                <div class="modal-buttons">
+                    <button type="submit">Save</button>
+                    <button type="button" id="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let editRow = null;
+
+        // Filter functionality
+        const searchInput = document.getElementById('searchInput');
+        const classFilter = document.getElementById('classFilter');
+        const studentTable = document.getElementById('studentTable');
+
+        function filterTable() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const classTerm = classFilter.value;
+            const rows = studentTable.querySelectorAll('tr:not(:first-child)');
+
+            rows.forEach(row => {
+                const firstName = row.cells[0].textContent.toLowerCase();
+                const lastName = row.cells[1].textContent.toLowerCase();
+                const fullName = `${firstName} ${lastName}`;
+                const studentClass = row.cells[2].textContent;
+
+                const matchesName = fullName.includes(searchTerm);
+                const matchesClass = classTerm === '' || studentClass.startsWith(classTerm);
+
+                if (matchesName && matchesClass) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterTable);
+        classFilter.addEventListener('change', filterTable);
+
+        // CRUD functionality
+        const modal = document.getElementById('studentModal');
+        const form = document.getElementById('studentForm');
+        const addStudentBtn = document.getElementById('addStudentBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const modalTitle = document.getElementById('modalTitle');
+
+        addStudentBtn.addEventListener('click', () => {
+            editRow = null;
+            modalTitle.textContent = 'Add Student Fees';
+            form.reset();
+            modal.style.display = 'block';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                class: document.getElementById('class').value,
+                firstTerm: document.getElementById('firstTerm').value,
+                secondTerm: document.getElementById('secondTerm').value,
+                lastTerm: document.getElementById('lastTerm').value,
+                remFirst: document.getElementById('remFirst').value || '0',
+                remSecond: document.getElementById('remSecond').value || '0',
+                remLast: document.getElementById('remLast').value || '0'
+            };
+
+            if (editRow) {
+                // Update existing row
+                editRow.cells[0].textContent = data.firstName;
+                editRow.cells[1].textContent = data.lastName;
+                editRow.cells[2].textContent = data.class;
+                editRow.cells[3].textContent = data.firstTerm;
+                editRow.cells[4].textContent = data.secondTerm;
+                editRow.cells[5].textContent = data.lastTerm;
+                editRow.cells[6].textContent = data.remFirst;
+                editRow.cells[7].textContent = data.remSecond;
+                editRow.cells[8].textContent = data.remLast;
+                editRow.cells[6].className = data.remFirst === '0' ? 'zero' : 'remaining';
+                editRow.cells[7].className = data.remSecond === '0' ? 'zero' : 'remaining';
+                editRow.cells[8].className = data.remLast === '0' ? 'zero' : 'remaining';
+            } else {
+                // Create new row
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${data.firstName}</td>
+                    <td>${data.lastName}</td>
+                    <td>${data.class}</td>
+                    <td>${data.firstTerm}</td>
+                    <td>${data.secondTerm}</td>
+                    <td>${data.lastTerm}</td>
+                    <td class="${data.remFirst === '0' ? 'zero' : 'remaining'}">${data.remFirst}</td>
+                    <td class="${data.remSecond === '0' ? 'zero' : 'remaining'}">${data.remSecond}</td>
+                    <td class="${data.remLast === '0' ? 'zero' : 'remaining'}">${data.remLast}</td>
+                    <td class="action-buttons">
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                `;
+                studentTable.appendChild(row);
+            }
+
+            modal.style.display = 'none';
+            form.reset();
+            filterTable();
+        });
+
+        studentTable.addEventListener('click', (e) => {
+            if (e.target.classList.contains('edit-btn')) {
+                editRow = e.target.closest('tr');
+                modalTitle.textContent = 'Edit Student Fees';
+                document.getElementById('firstName').value = editRow.cells[0].textContent;
+                document.getElementById('lastName').value = editRow.cells[1].textContent;
+                document.getElementById('class').value = editRow.cells[2].textContent;
+                document.getElementById('firstTerm').value = editRow.cells[3].textContent;
+                document.getElementById('secondTerm').value = editRow.cells[4].textContent;
+                document.getElementById('lastTerm').value = editRow.cells[5].textContent;
+                document.getElementById('remFirst').value = editRow.cells[6].textContent;
+                document.getElementById('remSecond').value = editRow.cells[7].textContent;
+                document.getElementById('remLast').value = editRow.cells[8].textContent;
+                modal.style.display = 'block';
+            } else if (e.target.classList.contains('delete-btn')) {
+                if (confirm('Are you sure you want to delete this student?')) {
+                    e.target.closest('tr').remove();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
