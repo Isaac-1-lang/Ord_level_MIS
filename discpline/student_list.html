@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Search</title>
+    <link rel="stylesheet" href="disci.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+
+<h1>Search for a Student</h1>
+<input type="text" id="search-box" placeholder="Enter student name..." onkeyup="filterTable()">
+<i class="fas fa-search" id="search"></i>
+<br>
+<table id="studentTable" border="1px solid black">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Marks Before Reduction</th>
+            <th>Reduced Marks</th>
+            <th>Marks After Reduction</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td contenteditable="true">Isaac precieux</td>
+            <td contenteditable="true">year 1 A</td>
+            <td contenteditable="true">85</td>
+            <td contenteditable="true">5</td>
+            <td contenteditable="true">80</td>
+        </tr>
+        <tr>
+            <td contenteditable="true">Simbi kellia</td>
+            <td contenteditable="true">Year 1 B</td>
+            <td contenteditable="true">90</td>
+            <td contenteditable="true">10</td>
+            <td contenteditable="true">80</td>
+        </tr>
+        <tr>
+            <td>Sasha Ntwali</td>
+            <td>Year 1 C</td>
+            <td contenteditable="true">78</td>
+            <td contenteditable="true">8</td>
+            <td contenteditable="true">70</td>
+        </tr>
+        <tr>
+            <td>Mpuhwe Nikita</td>
+            <td>year 1 C</td>
+            <td contenteditable="true">88</td>
+            <td contenteditable="true">3</td>
+            <td contenteditable="true">85</td>
+        </tr>
+        <tr><td>Abera </td><td contenteditable="true">year 1 C</td><td contenteditable="true">85</td><td contenteditable="true">5</td><td contenteditable="true">80</td></tr>
+        <tr><td>Abayisenga pierette</td><td contenteditable="true">Year 1 A</td><td contenteditable="true">90</td><td contenteditable="true">10</td><td contenteditable="true">80</td></tr>
+        <tr><td>Abayo rose</td><td>Year 2 B</td><td contenteditable="true">78</td><td contenteditable="true">8</td><td contenteditable="true">70</td></tr>
+        <tr><td>Migisha anne</td><td>Year 2 C</td><td contenteditable="true">88</td><td contenteditable="true">3</td><td contenteditable="true">85</td></tr>
+        <tr><td>Michael gisa</td><td>Year 2 D</td><td contenteditable="true">92</td><td contenteditable="true">7</td><td contenteditable="true">85</td></tr>
+        <tr><td>Sarah Tuyisabe</td><td>Year 1 C</td><td contenteditable="true">67</td><td contenteditable="true">2</td><td contenteditable="true">65</td></tr>
+        <tr><td>Daniel Enzo</td><td>Year 2 C</td><td contenteditable="true">75</td><td contenteditable="true">5</td><td contenteditable="true">70</td></tr>
+        <tr><td>Olivia Rodrigo</td><td>Year 1 B</td><td contenteditable="true">83</td><td contenteditable="true">4</td><td contenteditable="true">79</td></tr>
+        <tr><td>Chris Rugaba</td><td>Year 3 C</td><td contenteditable="true">89</td><td contenteditable="true">3</td><td contenteditable="true">86</td></tr>
+        <tr><td>Isabella Nkunda</td><td>Year 2 B</td><td contenteditable="true">91</td><td contenteditable="true">6</td><td contenteditable="true">85</td></tr>
+        <tr><td>Liam Gisubizo</td><td>Year 3 D</td><td contenteditable="true">88</td><td contenteditable="true">7</td><td contenteditable="true">81</td></tr>
+        <tr><td>Emma Shimwa</td><td>Year 2 B</td><td contenteditable="true">76</td><td contenteditable="true">1</td><td contenteditable="true">75</td></tr>
+        <tr><td>William cyusa</td><td>Year 3 A</td><td contenteditable="true">84</td><td contenteditable="true">5</td><td contenteditable="true">79</td></tr>
+        <tr><td>Sophia Abatoni</td><td>Year 2 D</td><td contenteditable="true">73</td><td contenteditable="true">2</td><td contenteditable="true">71</td></tr>
+        <tr><td>James Nema</td><td>Year 3 A</td><td contenteditable="true">87</td><td contenteditable="true">4</td><td contenteditable="true">83</td></tr>
+        <tr><td>Amelia Keza</td><td>Year 1 B</td><td contenteditable="true">92</td><td contenteditable="true">6</td><td contenteditable="true">86</td></tr>
+        <tr><td>Jean Luc</td><td>Year 3 B</td><td contenteditable="true">79</td><td contenteditable="true">8</td><td contenteditable="true">71</td></tr>
+        <tr><td>Charlotte Kwizera</td><td>Year 2 B</td><td contenteditable="true">85</td><td contenteditable="true">3</td><td contenteditable="true">82</td></tr>
+        <tr><td>Henry Beza</td><td>Year 2 B</td><td contenteditable="true">80</td><td contenteditable="true">4</td><td contenteditable="true">76</td></tr>
+        <tr><td>Milla Kaneza</td><td>Year 3 C</td><td contenteditable="true">94</td><td contenteditable="true">5</td><td contenteditable="true">89</td></tr>
+        <tr><td>Benjamin Mugisha</td><td>Year 2 A</td><td contenteditable="true">82</td><td contenteditable="true">2</td><td contenteditable="true">80</td></tr>
+    </tbody>
+</table>
+</body>
+</html>
+<script>
+    function filterTable() {
+        const searchBox = document.getElementById('search-box');
+        const filter = searchBox.value.toLowerCase();
+        const table = document.getElementById('studentTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let found = false;
+
+            for (let j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    const cellValue = cells[j].textContent || cells[j].innerText;
+                    if (cellValue.toLowerCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            rows[i].style.display = found ? '' : 'none';
+        }
+    }

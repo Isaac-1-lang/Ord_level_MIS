@@ -3,199 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In Form</title>
+    <title>Login & Signup</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #2510e14e;
-            color: #E8EAED;
+            background-color: #f5f9ff;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
-        .login-container {
-            background-color: #7b32ce;
-            border-radius: 8px;
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .container {
+            display: flex;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 80%;
+            max-width: 900px;
+            height: 550px;
         }
 
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .login-form {
+        .image-section {
+            flex: 1;
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
         }
 
-        .input-group {
-            position: relative;
+        .image-section h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
         }
 
-        .input-group img {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-        }
-        .input-group .password-icon {
-            cursor: pointer;
-            position: relative;
-            top: 50px;
-        }
-        .input-group .password-icon:hover {
-            filter: brightness(0.8);
-        }
-        .input-group input[type="email"] {
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 12px 12px 40px;
-            border: 1px solid #5f6368;
-            border-radius: 4px;
-            background-color: #264da1;
-            color: #E8EAED;
+        .image-section p {
             font-size: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.6;
         }
 
-        .input-group input::placeholder {
-            color: #9AA0A6;
+        .forms-section {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
         }
 
-        .input-group input:focus {
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #1a73e8;
             outline: none;
-            border-color: #8ab4f8;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember input {
+            margin-right: 8px;
         }
 
         .forgot-password {
-            text-align: right;
-            margin-top: 8px;
-        }
-
-        .forgot-password a {
-            color: #8ab4f8;
+            color: #1a73e8;
             text-decoration: none;
-            font-size: 14px;
         }
 
-        .forgot-password a:hover {
+        .forgot-password:hover {
             text-decoration: underline;
         }
 
-        .signin-btn {
-            background-color: #8ab4f8;
-            color: #000000;
+        .submit-btn {
+            background-color: #1a73e8;
+            color: white;
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 4px;
-            padding: 12px;
+            border-radius: 6px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-top: 20px;
         }
 
-        .signin-btn:hover {
-            background-color: #669df6;
+        .submit-btn:hover {
+            background-color: #0d47a1;
         }
-        .link {
+
+        .alternate-text {
             text-align: center;
             margin-top: 20px;
-        }
-        .link p {
             font-size: 14px;
-        }
-        .password-toggle {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #9AA0A6;
-            font-size: 14px;
-            background: none;
-            border: none;
-            outline: none;
-            padding: 5px;
+            color: #666;
         }
 
-        .password-toggle:hover {
-            color: #E8EAED;
+        .alternate-link {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .alternate-link:hover {
+            text-decoration: underline;
+        }
+
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-text {
+            color: #666;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .social-text::before,
+        .social-text::after {
+            content: "";
+            position: absolute;
+            height: 1px;
+            background-color: #ddd;
+            top: 50%;
+            width: 30%;
+        }
+
+        .social-text::before {
+            left: 0;
+        }
+
+        .social-text::after {
+            right: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Toggle Forms */
+        #signup-form {
+            display: none;
+        }
+
+        #show-login:checked ~ #login-form {
+            display: block;
+        }
+
+        #show-login:checked ~ #signup-form {
+            display: none;
+        }
+
+        #show-signup:checked ~ #login-form {
+            display: none;
+        }
+
+        #show-signup:checked ~ #signup-form {
+            display: block;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                width: 90%;
+            }
+
+            .image-section {
+                padding: 30px;
+            }
+
+            .forms-section {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <main class="login-container">
-        <div class="title">Sign In</div>
-        <form class="login-form" onsubmit="handleSubmit(event)">
-            <div class="input-group">
-                <img src="../assets/images/account_circle_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="User Icon">
-                <input type="text" placeholder="Username" required name="username">
-            </div>
-            <div class="input-group">
-                <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Email Icon">
-                <input type="email" placeholder="Email" required name="email">
-            </div>
-            <div class="input-group">
-                <img src="../assets/images/visibility_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Password Icon" class="password-icon" onclick="togglePassword()">
-                <input type="password" placeholder="Password" required name="password">
-                <div class="forgot-password">
-                    <a href="mailto:isaprecieux112@gmail.com">Forgot password?</a>
-                </div>
-            </div>
-            <div class="input-group">
-                <img src="../assets/images/phone_in_talk_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Phone Icon">
-                <input type="tel" placeholder="Phone Number" required name="phone_number">
-            </div>
-            <button type="submit" class="signin-btn">Sign In</button>
-        </form>
-        <div class="link">
-            <p>Don't have an account ? <a href="./signup.html">Sign up</a></p>
+    <div class="container">
+        <div class="image-section">
+            <h1>Welcome Back</h1>
+            <p>To keep connected with us please login with your personal information</p>
+            <svg width="200" height="200" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="80" fill="rgba(255, 255, 255, 0.1)" />
+                <circle cx="100" cy="70" r="25" fill="rgba(255, 255, 255, 0.8)" />
+                <path d="M100 105 C 65 105, 40 130, 40 170 L160 170 C160 130, 135 105, 100 105Z" fill="rgba(255, 255, 255, 0.8)" />
+            </svg>
         </div>
-    </main>
 
-    <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const formValues = Object.fromEntries(formData.entries());
-            
-            console.log('Form submitted with values:', formValues);
-            alert('Form submitted successfully!');
-        }
-        function togglePassword() {
-            const passwordField = document.getElementById('password-field');
-            const toggleButton = document.querySelector('.password-toggle');
-            
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                toggleButton.textContent = 'Hide';
-            } else {
-                passwordField.type = 'password';
-                toggleButton.textContent = 'Show';
-            }
-        }
-    </script>
+        <div class="forms-section">
+            <input type="radio" id="show-login" name="form-toggle" checked>
+            <input type="radio" id="show-signup" name="form-toggle">
+
+            <form id="login-form">
+                <div class="form-header">
+                    <h2>Login</h2>
+                    <p>Enter your credentials to access your account</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="remember">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="submit-btn">Login</button>
+
+                <div class="alternate-text">
+                    Don't have an account? <label for="show-signup" class="alternate-link">Sign Up</label>
+                </div>
+
+                <div class="social-login">
+                    <div class="social-text">Or login with</div>
+                    <div class="social-icons">
+                        <div class="social-icon">
+                            <svg width="20" height="20" fill="#4267B2" viewBox="0 0 24 24">
+                                <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C18.34 21.21 22 17.06 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/>
+                            </svg>
+                        </div>
+                        <div class="social-icon">
+                            <svg width="20" height="20" fill="#DB4437" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17.36 16.95C16.11 18.03 14.41 18.69 12.48 18.69C9.09 18.69 6.19 16.44 5.25 13.33C5.1 12.84 5.02 12.33 5.02 11.81C5.02 11.29 5.1 10.78 5.25 10.29C6.19 7.18 9.09 4.93 12.48 4.93C14.32 4.93 15.92 5.56 17.08 6.55L15.06 8.59C14.38 7.95 13.43 7.62 12.48 7.62C10.24 7.62 8.36 9.21 7.79 11.28C7.67 11.64 7.62 12.03 7.62 12.4C7.62 12.77 7.67 13.16 7.79 13.52C8.36 15.59 10.24 17.18 12.48 17.18C13.45 17.18 14.32 16.92 15.05 16.47C15.9 15.96 16.48 15.12 16.73 14.16H12.48V11.59H19.27C19.34 12.1 19.38 12.63 19.38 13.19C19.38 14.58 19 15.97 17.36 16.95Z"/>
+                            </svg>
+                        </div>
+                        <div class="social-icon">
+                            <svg width="20" height="20" fill="#000000" viewBox="0 0 24 24">
+                                <path d="M12 2C6.47 2 2 6.47 2 12C2 16.42 5.07 20.16 9.24 21.56C9.8 21.66 10 21.31 10 21V19.17C6.83 19.8 6.37 17.9 6.37 17.9C6 16.73 5.45 16.38 5.45 16.38C4.69 15.73 5.52 15.75 5.52 15.75C6.37 15.82 6.8 16.85 6.8 16.85C7.55 18.31 8.95 17.95 10.03 17.65C10.13 17 10.42 16.53 10.73 16.27C8.31 16 5.77 15.13 5.77 11.3C5.77 10.19 6.09 9.28 6.81 8.56C6.69 8.28 6.41 7.27 7 5.96C7 5.96 7.62 5.65 9.88 7.06C10.74 6.8 11.65 6.67 12.55 6.67C13.46 6.67 14.36 6.8 15.22 7.06C17.48 5.65 18.1 5.96 18.1 5.96C18.69 7.27 18.41 8.28 18.29 8.56C19.01 9.28 19.33 10.19 19.33 11.3C19.33 15.14 16.79 16 14.36 16.26C14.75 16.58 15.1 17.21 15.1 18.18V21C15.1 21.31 15.3 21.67 15.87 21.56C20.04 20.15 23.11 16.42 23.11 12C23.11 6.47 18.63 2 13.11 2H12Z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form id="signup-form">
+                <div class="form-header">
+                    <h2>Sign Up</h2>
+                    <p>Create an account to get started</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Sign Up</button>
+
+                <div class="alternate-text">
+                    Already have an account? <label for="show-login" class="alternate-link">Login</label>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
