@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School_MIS Dashboard</title>
+    <title>Teacher Portal</title>
     <style>
         :root {
             --primary: #7b32ce;
@@ -19,14 +19,6 @@
             --warning: #ff9800;
             --danger: #f44336;
             --info: #2196f3;
-            --transition: all 0.3s ease;
-        }
-
-        [data-theme="dark"] {
-            --bg-light: #1a1e2e;
-            --bg-dark: #121420;
-            --text-dark: #e8eaed;
-            --text-light: #1a1a1a;
         }
 
         * {
@@ -34,7 +26,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
-            scroll-behavior: smooth;
         }
 
         body {
@@ -42,36 +33,6 @@
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
-            transition: var(--transition);
-        }
-
-        /* Loading State */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.3s ease;
-        }
-
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         /* Sidebar Styles */
@@ -85,7 +46,7 @@
             left: 0;
             top: 0;
             overflow-y: auto;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             z-index: 100;
         }
 
@@ -121,7 +82,7 @@
             color: var(--text-light);
             text-decoration: none;
             padding: 12px 20px;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             border-left: 3px solid transparent;
         }
 
@@ -171,7 +132,7 @@
             flex: 1;
             margin-left: 250px;
             padding: 0;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .topbar {
@@ -184,11 +145,6 @@
             position: sticky;
             top: 0;
             z-index: 99;
-            transition: var(--transition);
-        }
-
-        [data-theme="dark"] .topbar {
-            background-color: var(--bg-dark);
         }
 
         .toggle-sidebar {
@@ -200,14 +156,6 @@
             display: none;
         }
 
-        .theme-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: var(--primary);
-        }
-
         .search-container {
             display: flex;
             align-items: center;
@@ -215,7 +163,6 @@
             border-radius: 25px;
             padding: 8px 15px;
             width: 300px;
-            transition: var(--transition);
         }
 
         .search-container input {
@@ -224,10 +171,6 @@
             outline: none;
             flex: 1;
             padding: 0 10px;
-        }
-
-        .search-container input:invalid:not(:placeholder-shown) {
-            border: 1px solid var(--danger);
         }
 
         .search-container img {
@@ -244,11 +187,6 @@
         .action-icon {
             position: relative;
             cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .action-icon:hover {
-            transform: scale(1.1);
         }
 
         .action-icon img {
@@ -307,11 +245,7 @@
             padding: 20px;
             display: flex;
             align-items: center;
-            transition: var(--transition);
-        }
-
-        [data-theme="dark"] .stat-card {
-            background-color: var(--bg-dark);
+            transition: transform 0.3s ease;
         }
 
         .stat-card:hover {
@@ -332,15 +266,11 @@
             background-color: rgba(123, 50, 206, 0.1);
         }
 
-        .stat-icon.staff {
-            background-color: rgba(76, 175, 80, 0.1);
-        }
-
         .stat-icon.classes {
             background-color: rgba(255, 152, 0, 0.1);
         }
 
-        .stat-icon.finance {
+        .stat-icon.assignments {
             background-color: rgba(33, 150, 243, 0.1);
         }
 
@@ -377,11 +307,6 @@
             position: relative;
             top: 20px;
             overflow: hidden;
-            transition: var(--transition);
-        }
-
-        [data-theme="dark"] .dashboard-card {
-            background-color: var(--bg-dark);
         }
 
         .card-header {
@@ -408,15 +333,11 @@
             padding: 20px;
         }
 
-        .attendance-chart {
+        .performance-chart {
             height: 250px;
             background-color: #f9f9f9;
             border-radius: 8px;
             padding: 20px;
-        }
-
-        [data-theme="dark"] .attendance-chart {
-            background-color: var(--bg-dark);
         }
 
         .recent-activity {
@@ -428,11 +349,6 @@
             align-items: flex-start;
             padding: 15px 0;
             border-bottom: 1px solid #eee;
-            transition: var(--transition);
-        }
-
-        .activity-item:hover {
-            background-color: rgba(0, 0, 0, 0.03);
         }
 
         .activity-item:last-child {
@@ -497,11 +413,6 @@
             display: flex;
             padding: 12px 0;
             border-bottom: 1px solid #eee;
-            transition: var(--transition);
-        }
-
-        .event-item:hover {
-            background-color: rgba(0, 0, 0, 0.03);
         }
 
         .event-item:last-child {
@@ -572,11 +483,7 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             text-decoration: none;
             color: var(--text-dark);
-            transition: var(--transition);
-        }
-
-        [data-theme="dark"] .quick-link {
-            background-color: var(--bg-dark);
+            transition: all 0.3s ease;
         }
 
         .quick-link:hover {
@@ -598,7 +505,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .quick-link-icon img {
@@ -614,27 +521,6 @@
         .quick-link-description {
             font-size: 0.8rem;
             opacity: 0.8;
-        }
-
-        /* Tooltip Styles */
-        [data-tooltip] {
-            position: relative;
-        }
-
-        [data-tooltip]:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            z-index: 10;
-            margin-bottom: 8px;
         }
 
         /* Responsive Design */
@@ -676,36 +562,34 @@
             .topbar-actions {
                 gap: 10px;
             }
-            
-            .search-container {
-                margin: 0 10px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-    </div>
-
     <!-- Sidebar -->
     <aside class="sidebar" role="navigation" aria-label="Main navigation">
         <div class="sidebar-header">
             <img src="../assets/images/Screenshot 2025-04-27 212118.png" alt="School_MIS Logo" aria-hidden="true">
-            <h1>Medical Portal</h1>
+            <h1>School_MIS</h1>
         </div>
+        
         <ul class="sidebar-menu">
-            <li><a href="#" class="active" data-tooltip="View dashboard" aria-current="page"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Dashboard Icon" aria-hidden="true"> Dashboard</a></li>
-            <li><a href="./student_list.html" data-tooltip="Manage students"><img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Students Icon" aria-hidden="true"> Students</a></li>
-            <li><a href="./appointment (1).html" data-tooltip="Schedule appointments"><img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Appointments Icon" aria-hidden="true"> Appointments</a></li>
+            <li><a href="#" class="active" aria-current="page"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Dashboard Icon" aria-hidden="true"> Dashboard</a></li>
+            <li><a href="#"><img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Students Icon" aria-hidden="true"> My Students</a></li>
+            <li><a href="#"><img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Classes Icon" aria-hidden="true"> My Classes</a></li>
+            <li><a href="#"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Attendance Icon" aria-hidden="true"> Attendance</a></li>
+            <li><a href="#"><img src="../assets/images/upload.png" alt="Assignments Icon" aria-hidden="true"> Assignments</a></li>
+            <li><a href="#"><img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Grades Icon" aria-hidden="true"> Grades</a></li>
+            <li><a href="#"><img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Communication Icon" aria-hidden="true"> Communication</a></li>
+            <li><a href="#"><img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon" aria-hidden="true"> Settings</a></li>
         </ul>
+        
         <div class="sidebar-footer">
             <div class="user-info">
                 <img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="User Avatar" aria-hidden="true">
                 <div>
                     <div class="user-name">John Smith</div>
-                    <div class="user-role">Administrator</div>
+                    <div class="user-role">Teacher</div>
                 </div>
             </div>
         </div>
@@ -716,21 +600,22 @@
         <!-- Top Bar -->
         <div class="topbar" role="banner">
             <button class="toggle-sidebar" aria-label="Toggle sidebar">☰</button>
-            <form class="search-container" role="search">
+            
+            <div class="search-container">
                 <img src="../assets/images/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Search Icon" aria-hidden="true">
-                <input type="search" placeholder="Search..." required minlength="3" aria-label="Search dashboard">
-            </form>
+                <input type="text" placeholder="Search students..." aria-label="Search students">
+            </div>
+            
             <div class="topbar-actions">
-                <button class="theme-toggle" aria-label="Toggle dark mode" data-tooltip="Toggle dark mode">🌙</button>
-                <div class="action-icon" data-tooltip="Notifications">
+                <div class="action-icon" aria-label="Notifications">
                     <img src="../assets/images/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Notification Icon" aria-hidden="true">
                     <span class="badge">3</span>
                 </div>
-                <div class="action-icon" data-tooltip="Messages">
+                <div class="action-icon" aria-label="Messages">
                     <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Message Icon" aria-hidden="true">
                     <span class="badge">5</span>
                 </div>
-                <div class="action-icon" data-tooltip="Settings">
+                <div class="action-icon" aria-label="Settings">
                     <img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon" aria-hidden="true">
                 </div>
             </div>
@@ -744,34 +629,70 @@
             </div>
             
             <!-- Quick Stats -->
-            <div class="quick-stats" role="region" aria-label="Quick statistics">
-                <div class="stat-card" data-tooltip="Total students enrolled">
+            <div class="quick-stats" role="region" aria-label="Teaching statistics">
+                <div class="stat-card">
+                    <div class="stat-icon students">
+                        <img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Students Icon" aria-hidden="true">
+                    </div>
                     <div class="stat-details">
-                        <div class="stat-value">1,247</div>
+                        <div class="stat-value">85</div>
                         <div class="stat-label">Total Students</div>
                     </div>
                 </div>
-                <div class="stat-card" data-tooltip="Active classes running">
+                
+                <div class="stat-card">
+                    <div class="stat-icon classes">
+                        <img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Classes Icon" aria-hidden="true">
+                    </div>
                     <div class="stat-details">
-                        <div class="stat-value">42</div>
+                        <div class="stat-value">4</div>
                         <div class="stat-label">Active Classes</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon assignments">
+                        <img src="../assets/images/upload.png" alt="Assignments Icon" aria-hidden="true">
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Pending Assignments</div>
                     </div>
                 </div>
             </div>
             
             <!-- Quick Links Section -->
-            <div class="quick-links" role="region" aria-label="Quick links">
-                <a href="#" class="quick-link" data-tooltip="Add a new student">
-                    <div class="quick-link-title">Add Student</div>
-                    <div class="quick-link-description">Register a new student</div>
-                </a>
-                <a href="#" class="quick-link" data-tooltip="Mark attendance">
+            <div class="quick-links" role="region" aria-label="Quick teaching actions">
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Attendance Icon" aria-hidden="true">
+                    </div>
                     <div class="quick-link-title">Take Attendance</div>
                     <div class="quick-link-description">Mark daily attendance</div>
                 </a>
-                <a href="./student_list.html" class="quick-link" data-tooltip="Manage discipline">
-                    <div class="quick-link-title">Results</div>
-                    <div class="quick-link-description">Manage discipline marks</div>
+                
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/upload.png" alt="Assignment Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Create Assignment</div>
+                    <div class="quick-link-description">Add new assignments</div>
+                </a>
+                
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Grades Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Enter Grades</div>
+                    <div class="quick-link-description">Record student grades</div>
+                </a>
+                
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Communication Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Parent Communication</div>
+                    <div class="quick-link-description">Contact parents</div>
                 </a>
             </div>
             
@@ -779,42 +700,60 @@
             <div class="dashboard-grid">
                 <!-- Left Column -->
                 <div>
-                    <!-- Attendance Overview Card -->
-                    <div class="dashboard-card" role="region" aria-label="Weekly attendance">
+                    <!-- Student Performance Card -->
+                    <div class="dashboard-card" role="region" aria-label="Student performance overview">
                         <div class="card-header">
-                            <div class="card-title">Weekly Attendance Overview</div>
+                            <div class="card-title">Student Performance Overview</div>
                             <a href="#" class="card-action">View Details</a>
                         </div>
                         <div class="card-content">
-                            <div class="attendance-chart">
-                                <canvas id="attendanceChart" aria-label="Attendance chart"></canvas>
+                            <div class="performance-chart">
+                                <canvas id="performanceChart" aria-label="Student performance chart"></canvas>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Recent Activity Card -->
-                    <div class="dashboard-card" role="region" aria-label="Recent activity">
+                    <!-- Recent Activities Card -->
+                    <div class="dashboard-card" role="region" aria-label="Recent classroom activities" style="position: relative; top: 2rem;">
                         <div class="card-header">
-                            <div class="card-title">Recent Activity</div>
+                            <div class="card-title">Recent Activities</div>
                             <a href="#" class="card-action">View All</a>
                         </div>
                         <div class="card-content">
                             <ul class="recent-activity">
                                 <li class="activity-item">
+                                    <div class="activity-icon icon-green">
+                                        <img src="../assets/images/assignment_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Assignment Icon" aria-hidden="true">
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">New student registration completed</div>
+                                        <div class="activity-title">Math homework assigned to Grade 10A</div>
                                         <div class="activity-time">10 minutes ago</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
+                                    <div class="activity-icon icon-blue">
+                                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Grades Icon" aria-hidden="true">
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Monthly attendance report generated</div>
+                                        <div class="activity-title">Science quiz grades entered</div>
                                         <div class="activity-time">2 hours ago</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
+                                    <div class="activity-icon icon-orange">
+                                        <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Communication Icon" aria-hidden="true">
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">System maintenance scheduled for tonight</div>
+                                        <div class="activity-title">Parent meeting scheduled</div>
+                                        <div class="activity-time">Yesterday</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-green">
+                                        <img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Attendance Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Attendance recorded for Grade 10B</div>
                                         <div class="activity-time">Yesterday</div>
                                     </div>
                                 </li>
@@ -825,11 +764,11 @@
                 
                 <!-- Right Column -->
                 <div>
-                    <!-- Upcoming Events Card -->
-                    <div class="dashboard-card" role="region" aria-label="Upcoming events">
+                    <!-- Upcoming Schedule Card -->
+                    <div class="dashboard-card" role="region" aria-label="Upcoming schedule">
                         <div class="card-header">
-                            <div class="card-title">Upcoming Events</div>
-                            <a href="#" class="card-action">View Calendar</a>
+                            <div class="card-title">Upcoming Schedule</div>
+                            <a href="#" class="card-action">View Full Schedule</a>
                         </div>
                         <div class="card-content">
                             <ul class="upcoming-events">
@@ -839,9 +778,33 @@
                                         <div class="event-month">Apr</div>
                                     </div>
                                     <div class="event-details">
-                                        <div class="event-title">Staff Meeting</div>
+                                        <div class="event-title">Math Class - Grade 10A</div>
                                         <div class="event-time">
-                                            10:00 AM - 12:00 PM
+                                            9:00 AM - 10:00 AM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">28</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Science Quiz - Grade 10B</div>
+                                        <div class="event-time">
+                                            11:00 AM - 12:00 PM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">29</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Parent-Teacher Meeting</div>
+                                        <div class="event-time">
+                                            2:00 PM - 4:00 PM
                                         </div>
                                     </div>
                                 </li>
@@ -851,33 +814,9 @@
                                         <div class="event-month">Apr</div>
                                     </div>
                                     <div class="event-details">
-                                        <div class="event-title">Science Fair</div>
+                                        <div class="event-title">Staff Meeting</div>
                                         <div class="event-time">
-                                            9:00 AM - 3:00 PM
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="event-item">
-                                    <div class="event-date">
-                                        <div class="event-day">02</div>
-                                        <div class="event-month">May</div>
-                                    </div>
-                                    <div class="event-details">
-                                        <div class="event-title">Parent-Teacher Conference</div>
-                                        <div class="event-time">
-                                            4:00 PM - 7:00 PM
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="event-item">
-                                    <div class="event-date">
-                                        <div class="event-day">05</div>
-                                        <div class="event-month">May</div>
-                                    </div>
-                                    <div class="event-details">
-                                        <div class="event-title">Board Meeting</div>
-                                        <div class="event-time">
-                                            1:00 PM - 3:00 PM
+                                            3:00 PM - 4:00 PM
                                         </div>
                                     </div>
                                 </li>
@@ -886,31 +825,37 @@
                     </div>
                     
                     <!-- To-Do List Card -->
-                    <div class="dashboard-card" role="region" aria-label="To-do list">
+                    <div class="dashboard-card" role="region" aria-label="Teaching tasks" style="position: relative; top: 2rem;">
                         <div class="card-header">
-                            <div class="card-title">To-Do listasdasd</div>
+                            <div class="card-title">Teaching Tasks</div>
                             <a href="#" class="card-action">Add New</a>
                         </div>
                         <div class="card-content">
                             <ul class="recent-activity">
                                 <li class="activity-item">
-                                    <div class="activity-icon icon-blue"></div>
+                                    <div class="activity-icon icon-blue">
+                                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Task Icon" aria-hidden="true">
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Review quarterly budget report</div>
+                                        <div class="activity-title">Grade Math homework</div>
                                         <div class="activity-time">Due today</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
-                                    <div class="activity-icon icon-green"></div>
+                                    <div class="activity-icon icon-green">
+                                        <img src="../assets/images/assignment_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Task Icon" aria-hidden="true">
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Sign off on new textbook orders</div>
+                                        <div class="activity-title">Prepare Science quiz questions</div>
                                         <div class="activity-time">Due tomorrow</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
-                                    <div class="activity-icon icon-orange"></div>
+                                    <div class="activity-icon icon-orange">
+                                        <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Task Icon" aria-hidden="true">
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Prepare for board meeting presentation</div>
+                                        <div class="activity-title">Send progress reports to parents</div>
                                         <div class="activity-time">Due in 3 days</div>
                                     </div>
                                 </li>
@@ -921,43 +866,13 @@
             </div>
         </div>
     </main>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
-        // Theme Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        
-        if (currentTheme === 'dark') {
-            body.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            const isDark = body.getAttribute('data-theme') === 'dark';
-            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            themeToggle.textContent = isDark ? '☀️' : '🌙';
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
-        });
-
-        // Loading State
-        window.addEventListener('load', () => {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            setTimeout(() => {
-                loadingOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
-                }, 300);
-            }, 1000);
-        });
-
         // Toggle sidebar on mobile
-        document.querySelector('.toggle-sidebar').addEventListener('click', function(e) {
-            e.preventDefault();
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
             document.querySelector('.sidebar').classList.toggle('active');
         });
-
+        
         // Close sidebar when clicking outside on mobile
         document.addEventListener('click', function(event) {
             const sidebar = document.querySelector('.sidebar');
@@ -968,50 +883,38 @@
             }
         });
 
-        // Search form validation
-        const searchForm = document.querySelector('.search-container');
-        searchForm.addEventListener('submit', (e) => {
-            const input = searchForm.querySelector('input');
-            if (!input.value.trim()) {
-                e.preventDefault();
-                input.setCustomValidity('Please enter a search term');
-                input.reportValidity();
-            } else {
-                input.setCustomValidity('');
-            }
-        });
-
-        // Chart Animation
+        // Student Performance Chart
         document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('attendanceChart').getContext('2d');
+            const ctx = document.getElementById('performanceChart').getContext('2d');
             
-            const attendanceData = {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            const performanceData = {
+                labels: ['Math', 'Science', 'English', 'History'],
                 datasets: [
                     {
-                        label: 'Attendance %',
-                        data: [85, 92, 78, 88, 72],
-                        backgroundColor: '#4f46e5',
-                        borderRadius: 4,
-                        borderWidth: 0,
+                        label: 'Class Average (%)',
+                        data: [85, 78, 92, 88],
+                        backgroundColor: 'rgba(123, 50, 206, 0.5)',
+                        borderColor: 'rgba(123, 50, 206, 1)',
+                        borderWidth: 1
                     }
                 ]
             };
             
-            const attendanceChart = new Chart(ctx, {
+            const performanceChart = new Chart(ctx, {
                 type: 'bar',
-                data: attendanceData,
+                data: performanceData,
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false,
+                            display: true,
+                            position: 'top'
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return `Attendance: ${context.raw}%`;
+                                    return `${context.dataset.label}: ${context.raw}%`;
                                 }
                             }
                         }
@@ -1035,32 +938,8 @@
                                 display: false
                             }
                         }
-                    },
-                    animation: {
-                        duration: 2000,
-                        easing: 'easeOutBounce'
                     }
                 }
-            });
-
-            // Add scroll reveal animation
-            const elements = document.querySelectorAll('.stat-card, .quick-link, .dashboard-card');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-
-            elements.forEach(element => {
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(20px)';
-                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(element);
             });
         });
     </script>

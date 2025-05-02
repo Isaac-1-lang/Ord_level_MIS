@@ -1,0 +1,127 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+    background-attachment: scroll;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 20px 0;
+    color: #444;
+}
+button {
+    position: relative;
+    top: 5px;
+    /* height: 10px; */
+    border-radius: 10px;
+    border: none;
+    background-color: #5a67d8;
+
+}
+button img {
+    max-width: 24px;
+    max-height: 24px;
+    transform: scaleX(-1);
+}
+#search{
+    font-size: x-large;
+    margin-left: 10px;
+    position: center;
+}
+#search-box {
+    width: 90%;
+    max-width: 500px;
+    padding: 12px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#searchBar:focus {
+    border-color: #5a67d8;
+}
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color:#5a67d8;
+    color: white;
+}
+
+thead th {
+    padding: 15px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background-color: #f0f0f8;
+}
+
+tbody td {
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+@media (max-width: 768px) {
+    table {
+        font-size: 0.85rem;
+    }
+
+    #searchBar {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    thead {
+        display: none; 
+    }
+
+    tbody td {
+        display: block;
+        text-align: left;
+        padding: 10px;
+        position: relative;
+    }
+
+    tbody td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    tbody tr {
+        margin-bottom: 20px;
+        display: block;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+}

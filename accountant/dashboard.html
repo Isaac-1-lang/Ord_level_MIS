@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School_MIS Dashboard</title>
+    <title>School_MIS Accountant Dashboard</title>
     <style>
         :root {
             --primary: #7b32ce;
@@ -262,20 +262,16 @@
             margin-right: 15px;
         }
 
-        .stat-icon.students {
-            background-color: rgba(123, 50, 206, 0.1);
-        }
-
-        .stat-icon.staff {
-            background-color: rgba(76, 175, 80, 0.1);
-        }
-
-        .stat-icon.classes {
-            background-color: rgba(255, 152, 0, 0.1);
-        }
-
         .stat-icon.finance {
             background-color: rgba(33, 150, 243, 0.1);
+        }
+
+        .stat-icon.expenses {
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+
+        .stat-icon.revenue {
+            background-color: rgba(76, 175, 80, 0.1);
         }
 
         .stat-icon img {
@@ -337,34 +333,11 @@
             padding: 20px;
         }
 
-        .attendance-chart {
+        .finance-chart {
             height: 250px;
             background-color: #f9f9f9;
             border-radius: 8px;
-            display: flex;
-            align-items: flex-end;
             padding: 20px;
-            gap: 15px;
-        }
-
-        .chart-bar {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bar {
-            width: 100%;
-            background-color: var(--primary-light);
-            border-radius: 4px 4px 0 0;
-            transition: height 0.3s ease;
-        }
-
-        .day {
-            font-size: 0.8rem;
-            color: #666;
         }
 
         .recent-activity {
@@ -528,7 +501,7 @@
             height: 60px;
             border-radius: 50%;
             background-color: var(--bg-light);
-            display: flex;
+            display flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
@@ -594,59 +567,54 @@
 </head>
 <body>
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" role="navigation" aria-label="Main navigation">
         <div class="sidebar-header">
-            <img src="../assets/images/Screenshot 2025-04-27 212118.png" alt="School_MIS Logo">
+            <img src="../assets/images/Screenshot 2025-04-27 212118.png" alt="School_MIS Logo" aria-hidden="true">
             <h1>School_MIS</h1>
         </div>
         
         <ul class="sidebar-menu">
-            <li><a href="#" class="active"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Dashboard Icon"> Dashboard</a></li>
-            <li><a href="#"><img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Students Icon"> Students</a></li>
-            <li><a href="#"><img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Teachers Icon"> Teachers</a></li>
-            <li><a href="#"><img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Classes Icon"> Classes</a></li>
-            <li><a href="#"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Attendance Icon"> Attendance</a></li>
-            <li><a href="#"><img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Examination Icon"> Examinations</a></li>
-            <li><a href="reports.html"><img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Reports Icon"> Reports</a></li>
-            <li><a href="#"><img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Finance Icon"> Finance</a></li>
-            <li><a href="#"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Library Icon"> Library</a></li>
-            <li><a href="#"><img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Communication Icon"> Communication</a></li>
-            <li><a href="#"><img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon"> Settings</a></li>
+            <li><a href="#" class="active" aria-current="page"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Dashboard Icon" aria-hidden="true"> Dashboard</a></li>
+            <li><a href="#"><img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Fees Icon" aria-hidden="true"> Fee Management</a></li>
+            <li><a href="#"><img src="../assets/images/money-management.png" alt=""> Expenses</a></li>
+            <!-- <li><a href="#"><img src="../assets/images/account_balance_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Payroll Icon" aria-hidden="true"> Payroll</a></li> -->
+            <li><a href="reports.html"><img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Reports Icon" aria-hidden="true"> Financial Reports</a></li>
+            <li><a href="#"><img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon" aria-hidden="true"> Settings</a></li>
         </ul>
         
         <div class="sidebar-footer">
             <div class="user-info">
-                <img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="User Avatar">
+                <img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="User Avatar" aria-hidden="true">
                 <div>
                     <div class="user-name">John Smith</div>
-                    <div class="user-role">Administrator</div>
+                    <div class="user-role">Accountant</div>
                 </div>
             </div>
         </div>
     </aside>
     
     <!-- Main Content -->
-    <div class="main-content">
+    <main class="main-content" role="main">
         <!-- Top Bar -->
-        <div class="topbar">
-            <button class="toggle-sidebar">☰</button>
+        <div class="topbar" role="banner">
+            <button class="toggle-sidebar" aria-label="Toggle sidebar">☰</button>
             
             <div class="search-container">
-                <img src="../assets/images/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Search Icon">
-                <input type="text" placeholder="Search...">
+                <img src="../assets/images/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Search Icon" aria-hidden="true">
+                <input type="text" placeholder="Search transactions..." aria-label="Search transactions">
             </div>
             
             <div class="topbar-actions">
-                <div class="action-icon">
-                    <img src="../assets/images/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Notification Icon">
+                <div class="action-icon" aria-label="Notifications">
+                    <img src="../assets/images/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Notification Icon" aria-hidden="true">
                     <span class="badge">3</span>
                 </div>
-                <div class="action-icon">
-                    <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Message Icon">
+                <div class="action-icon" aria-label="Messages">
+                    <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Message Icon" aria-hidden="true">
                     <span class="badge">5</span>
                 </div>
-                <div class="action-icon">
-                    <img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon">
+                <div class="action-icon" aria-label="Settings">
+                    <img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon" aria-hidden="true">
                 </div>
             </div>
         </div>
@@ -659,49 +627,62 @@
             </div>
             
             <!-- Quick Stats -->
-            <div class="quick-stats">
+            <div class="quick-stats" role="region" aria-label="Financial statistics">
                 <div class="stat-card">
+                    <div class="stat-icon finance">
+                        <img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Fees Icon" aria-hidden="true">
+                    </div>
                     <div class="stat-details">
-                        <div class="stat-value">1,247</div>
-                        <div class="stat-label">Total Students</div>
+                        <div class="stat-value">$245,000</div>
+                        <div class="stat-label">Total Fees Collected</div>
                     </div>
                 </div>
                 
                 <div class="stat-card">
+                    <div class="stat-icon expenses">
+                        <img src="../assets/images/money-management.png" alt="Expenses Icon" aria-hidden="true">
+                    </div>
                     <div class="stat-details">
-                        <div class="stat-value">86</div>
-                        <div class="stat-label">Teachers & Staff</div>
+                        <div class="stat-value">$187,500</div>
+                        <div class="stat-label">Monthly Expenses</div>
                     </div>
                 </div>
                 
                 <div class="stat-card">
+                    <div class="stat-icon revenue">
+                        <img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Revenue Icon" aria-hidden="true">
+                    </div>
                     <div class="stat-details">
-                        <div class="stat-value">42</div>
-                        <div class="stat-label">Active Classes</div>
+                        <div class="stat-value">$57,500</div>
+                        <div class="stat-label">Net Revenue</div>
                     </div>
                 </div>
             </div>
             
             <!-- Quick Links Section -->
-            <div class="quick-links">
+            <div class="quick-links" role="region" aria-label="Quick financial actions">
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Record Payment Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Record Payment</div>
+                    <div class="quick-link-description">Log new fee payments</div>
+                </a>
+                
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/money-management.png" alt="Add Expense Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Add Expense</div>
+                    <div class="quick-link-description">Record new expenses</div>
+                </a>
+                
                 <a href="reports.html" class="quick-link">
-                    <div class="quick-link-title">Reports</div>
-                    <div class="quick-link-description">View and generate reports</div>
-                </a>
-                
-                <a href="#" class="quick-link">
-                    <div class="quick-link-title">Add Student</div>
-                    <div class="quick-link-description">Register a new student</div>
-                </a>
-                
-                <a href="#" class="quick-link">
-                    <div class="quick-link-title">Take Attendance</div>
-                    <div class="quick-link-description">Mark daily attendance</div>
-                </a>
-                
-                <a href="#" class="quick-link">
-                    <div class="quick-link-title">Results</div>
-                    <div class="quick-link-description">Manage exam results</div>
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Generate Report Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Financial Reports</div>
+                    <div class="quick-link-description">Generate financial reports</div>
                 </a>
             </div>
             
@@ -709,61 +690,60 @@
             <div class="dashboard-grid">
                 <!-- Left Column -->
                 <div>
-                    <!-- Attendance Overview Card -->
-                    <div class="dashboard-card" style=" border: 1px solid #e5e7eb;
-                    border-radius: 8px;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                    background-color: white;
-                    overflow: hidden;">
-                        <div class="card-header" style="   .card-header {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            padding: 16px;
-                            border-bottom: 1px solid #e5e7eb;
-                        }">
-                            <div class="card-title" style="font-weight: 500;">Weekly Attendance Overview</div>
-                            <a href="#" class="card-action" style="color: #4f46e5;
-                            text-decoration: none;
-                            font-size: 14px;">View Details</a>
+                    <!-- Financial Overview Card -->
+                    <div class="dashboard-card" role="region" aria-label="Monthly financial overview">
+                        <div class="card-header">
+                            <div class="card-title">Monthly Financial Overview</div>
+                            <a href="#" class="card-action">View Details</a>
                         </div>
-                        <div class="card-content" style="padding: 16px;">
-                            <div class="attendance-chart" style="height: 250px;">
-                              <canvas id="attendanceChart" style="width: 100%; height: 100%;"></canvas>
+                        <div class="card-content">
+                            <div class="finance-chart">
+                                <canvas id="financeChart" aria-label="Financial overview chart"></canvas>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Recent Activity Card -->
-                    <div class="dashboard-card" style="position: relative;top: 2rem;">
+                    <!-- Recent Transactions Card -->
+                    <div class="dashboard-card" role="region" aria-label="Recent transactions" style="position: relative; top: 2rem;">
                         <div class="card-header">
-                            <div class="card-title">Recent Activity</div>
+                            <div class="card-title">Recent Transactions</div>
                             <a href="#" class="card-action">View All</a>
                         </div>
                         <div class="card-content">
                             <ul class="recent-activity">
                                 <li class="activity-item">
+                                    <div class="activity-icon icon-green">
+                                        <!-- <img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Payment Icon" aria-hidden="true"> -->
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">New student registration completed</div>
+                                        <div class="activity-title">Fee payment received from Sarah Johnson ($1,500)</div>
                                         <div class="activity-time">10 minutes ago</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
+                                    <div class="activity-icon icon-red">
+                                        <!-- <img src="../assets/images/payments_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Expense Icon" aria-hidden="true"> -->
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Monthly attendance report generated</div>
+                                        <div class="activity-title">Utility bill payment ($2,300)</div>
                                         <div class="activity-time">2 hours ago</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
+                                    <div class="activity-icon icon-blue">
+                                        <!-- <img src="../assets/images/account_balance_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Payroll Icon" aria-hidden="true"> -->
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Fee payment received from Sarah Johnson</div>
-                                        <div class="activity-time">5 hours ago</div>
+                                        <div class="activity-title">Monthly payroll processed ($45,000)</div>
+                                        <div class="activity-time">Yesterday</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
-                                 
+                                    <div class="activity-icon icon-green">
+                                        <!-- <img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Payment Icon" aria-hidden="true"> -->
+                                    </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">System maintenance scheduled for tonight</div>
+                                        <div class="activity-title">Donation received ($5,000)</div>
                                         <div class="activity-time">Yesterday</div>
                                     </div>
                                 </li>
@@ -774,11 +754,11 @@
                 
                 <!-- Right Column -->
                 <div>
-                    <!-- Upcoming Events Card -->
-                    <div class="dashboard-card">
+                    <!-- Upcoming Payments Card -->
+                    <div class="dashboard-card" role="region" aria-label="Upcoming payments">
                         <div class="card-header">
-                            <div class="card-title">Upcoming Events</div>
-                            <a href="#" class="card-action">View Calendar</a>
+                            <div class="card-title">Upcoming Payments</div>
+                            <a href="#" class="card-action">View All</a>
                         </div>
                         <div class="card-content">
                             <ul class="upcoming-events">
@@ -788,10 +768,9 @@
                                         <div class="event-month">Apr</div>
                                     </div>
                                     <div class="event-details">
-                                        <div class="event-title">Staff Meeting</div>
+                                        <div class="event-title">Vendor Payment ($3,200)</div>
                                         <div class="event-time">
-                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
-                                            10:00 AM - 12:00 PM
+                                            Due by 5:00 PM
                                         </div>
                                     </div>
                                 </li>
@@ -801,10 +780,9 @@
                                         <div class="event-month">Apr</div>
                                     </div>
                                     <div class="event-details">
-                                        <div class="event-title">Science Fair</div>
+                                        <div class="event-title">Tax Filing Deadline</div>
                                         <div class="event-time">
-                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
-                                            9:00 AM - 3:00 PM
+                                            Due by 11:59 PM
                                         </div>
                                     </div>
                                 </li>
@@ -814,10 +792,9 @@
                                         <div class="event-month">May</div>
                                     </div>
                                     <div class="event-details">
-                                        <div class="event-title">Parent-Teacher Conference</div>
+                                        <div class="event-title">Insurance Premium ($1,800)</div>
                                         <div class="event-time">
-                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
-                                            4:00 PM - 7:00 PM
+                                            Due by 3:00 PM
                                         </div>
                                     </div>
                                 </li>
@@ -827,10 +804,9 @@
                                         <div class="event-month">May</div>
                                     </div>
                                     <div class="event-details">
-                                        <div class="event-title">Board Meeting</div>
+                                        <div class="event-title">Equipment Lease Payment ($900)</div>
                                         <div class="event-time">
-                                            <!-- <img src="/api/placeholder/14/14" alt="Time Icon"> -->
-                                            1:00 PM - 3:00 PM
+                                            Due by 12:00 PM
                                         </div>
                                     </div>
                                 </li>
@@ -839,37 +815,37 @@
                     </div>
                     
                     <!-- To-Do List Card -->
-                    <div class="dashboard-card" style="position: relative;top: 2rem;">
+                    <div class="dashboard-card" role="region" aria-label="Accounting tasks" style="position: relative; top: 2rem;">
                         <div class="card-header">
-                            <div class="card-title">To-Do List</div>
+                            <div class="card-title">Accounting Tasks</div>
                             <a href="#" class="card-action">Add New</a>
                         </div>
                         <div class="card-content">
                             <ul class="recent-activity">
                                 <li class="activity-item">
                                     <div class="activity-icon icon-blue">
-                                        <!-- <img src="/api/placeholder/20/20" alt="Task Icon"> -->
+                                        <!-- <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Task Icon" aria-hidden="true"> -->
                                     </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Review quarterly budget report</div>
+                                        <div class="activity-title">Reconcile bank statements</div>
                                         <div class="activity-time">Due today</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
                                     <div class="activity-icon icon-green">
-                                        <!-- <img src="/api/placeholder/20/20" alt="Task Icon"> -->
+                                        <!-- <img src="../assets/images/attach_money_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Task Icon" aria-hidden="true"> -->
                                     </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Sign off on new textbook orders</div>
+                                        <div class="activity-title">Process refund requests</div>
                                         <div class="activity-time">Due tomorrow</div>
                                     </div>
                                 </li>
                                 <li class="activity-item">
                                     <div class="activity-icon icon-orange">
-                                        <!-- <img src="/api/placeholder/20/20" alt="Task Icon"> -->
+                                        <!-- <img src="../assets/images/payments_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Task Icon" aria-hidden="true"> -->
                                     </div>
                                     <div class="activity-details">
-                                        <div class="activity-title">Prepare for board meeting presentation</div>
+                                        <div class="activity-title">Prepare quarterly financial report</div>
                                         <div class="activity-time">Due in 3 days</div>
                                     </div>
                                 </li>
@@ -879,7 +855,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
         // Toggle sidebar on mobile
@@ -897,40 +873,45 @@
             }
         });
 
-         // Wait for DOM to be fully loaded
-         document.addEventListener('DOMContentLoaded', function() {
-            // Get canvas element
-            const ctx = document.getElementById('attendanceChart').getContext('2d');
+        // Financial Chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('financeChart').getContext('2d');
             
-            // Sample attendance data (percentages)
-            const attendanceData = {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            const financeData = {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr'],
                 datasets: [
                     {
-                        label: 'Attendance %',
-                        data: [85, 92, 78, 88, 72],
-                        backgroundColor: '#4f46e5', // Indigo color
-                        borderRadius: 4,
-                        borderWidth: 0,
+                        label: 'Revenue ($)',
+                        data: [50000, 55000, 52000, 57500],
+                        backgroundColor: 'rgba(76, 175, 80, 0.5)',
+                        borderColor: 'rgba(76, 175, 80, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Expenses ($)',
+                        data: [45000, 48000, 46000, 49000],
+                        backgroundColor: 'rgba(244, 67, 54, 0.5)',
+                        borderColor: 'rgba(244, 67, 54, 1)',
+                        borderWidth: 1
                     }
                 ]
             };
             
-            // Create chart
-            const attendanceChart = new Chart(ctx, {
+            const financeChart = new Chart(ctx, {
                 type: 'bar',
-                data: attendanceData,
+                data: financeData,
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false,
+                            display: true,
+                            position: 'top'
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return `Attendance: ${context.raw}%`;
+                                    return `${context.dataset.label}: $${context.raw}`;
                                 }
                             }
                         }
@@ -938,10 +919,9 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 100,
                             ticks: {
                                 callback: function(value) {
-                                    return value + '%';
+                                    return '$' + value;
                                 }
                             },
                             grid: {
@@ -959,3 +939,5 @@
             });
         });
     </script>
+</body>
+</html>

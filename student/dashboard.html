@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School_MIS Student Dashboard</title>
+    <style>
+        :root {
+            --primary: #7b32ce;
+            --primary-light: #9d5ce0;
+            --primary-dark: #5b1e9e;
+            --secondary: #264da1;
+            --accent: #8ab4f8;
+            --bg-light: #f5f7ff;
+            --bg-dark: #121638;
+            --text-light: #e8eaed;
+            --text-dark: #1a1a1a;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --info: #2196f3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+            color: var(--text-light);
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--accent);
+        }
+
+        .sidebar-menu a img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .topbar {
+            background-color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .toggle-sidebar {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: none;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-light);
+            border-radius: 25px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-container input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .search-container img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .action-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .action-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-content {
+            padding: 25px;
+        }
+
+        .welcome-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .stat-icon.courses {
+            background-color: rgba(123, 50, 206, 0.1);
+        }
+
+        .stat-icon.assignments {
+            background-color: rgba(255, 152, 0, 0.1);
+        }
+
+        .stat-icon.gpa {
+            background-color: rgba(33, 150, 243, 0.1);
+        }
+
+        .stat-icon img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .stat-details {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .dashboard-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            top: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .card-action {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .progress-chart {
+            height: 250px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .recent-activity {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .icon-blue {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: var(--info);
+        }
+
+        .icon-green {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .icon-orange {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .icon-red {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .activity-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .upcoming-events {
+            list-style: none;
+        }
+
+        .event-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .event-day {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .event-month {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .event-time {
+            font-size: 0.8rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .event-time img {
+            width: 14px;
+            height: 14px;
+            margin-right: 5px;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .quick-link:hover .quick-link-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .quick-link-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .quick-link-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .quick-link-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .toggle-sidebar {
+                display: block;
+            }
+            
+            .search-container {
+                width: auto;
+                flex: 1;
+                margin: 0 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .topbar-actions {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar" role="navigation" aria-label="Main navigation">
+        <div class="sidebar-header">
+            <img src="../assets/images/Screenshot 2025-04-27 212118.png" alt="School_MIS Logo" aria-hidden="true">
+            <h1>Educational Portal</h1>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active" aria-current="page"><img src="../assets/images/monitoring_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Dashboard Icon" aria-hidden="true"> Dashboard</a></li>
+            <li><a href="courses.html"><img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Courses Icon" aria-hidden="true"> My Courses</a></li>
+            <li><a href="./report.html"><img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Grades Icon" aria-hidden="true"> Grades</a></li>
+            <li><a href="#"><img src="../assets/images/upload.png" alt="Assignments Icon" aria-hidden="true"> Assignments</a></li>
+            <li><a href="#"><img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Messages Icon" aria-hidden="true"> Messages</a></li>
+            <li><a href="#"><img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon" aria-hidden="true"> Settings</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <img src="../assets/images/person_book_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="User Avatar" aria-hidden="true">
+                <div>
+                    <div class="user-name">Sarah Johnson</div>
+                    <div class="user-role">Student</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <main class="main-content" role="main">
+        <div class="topbar" role="banner">
+            <button class="toggle-sidebar" aria-label="Toggle sidebar">☰</button>
+            <div class="search-container">
+                <img src="../assets/images/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Search Icon" aria-hidden="true">
+                <input type="text" placeholder="Search courses..." aria-label="Search courses">
+            </div>
+            <div class="topbar-actions">
+                <div class="action-icon" aria-label="Notifications">
+                    <img src="../assets/images/notifications_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Notification Icon" aria-hidden="true">
+                    <span class="badge">4</span>
+                </div>
+                <div class="action-icon" aria-label="Messages">
+                    <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Message Icon" aria-hidden="true">
+                    <span class="badge">2</span>
+                </div>
+                <div class="action-icon" aria-label="Settings">
+                    <img src="../assets/images/settings_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Settings Icon" aria-hidden="true">
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="welcome-header">
+                <div class="greeting">Welcome back, Sarah!</div>
+                <div class="date">Sunday, April 27, 2025</div>
+            </div>
+            
+            <div class="quick-stats" role="region" aria-label="Student statistics">
+                <div class="stat-card">
+                    <div class="stat-icon courses">
+                        <img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Courses Icon" aria-hidden="true">
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Enrolled Courses</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon assignments">
+                        <img src="../assets/images/upload.png" alt="Assignments Icon" aria-hidden="true">
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Pending Assignments</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon gpa">
+                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="GPA Icon" aria-hidden="true">
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-value">3.8</div>
+                        <div class="stat-label">Current GPA</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-links" role="region" aria-label="Quick student actions">
+                <a href="courses.html" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Courses Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">View Courses</div>
+                    <div class="quick-link-description">Browse available courses</div>
+                </a>
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Grades Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Check Grades</div>
+                    <div class="quick-link-description">View your grades</div>
+                </a>
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/upload.png" alt="Assignments Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Submit Assignment</div>
+                    <div class="quick-link-description">Upload assignments</div>
+                </a>
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon">
+                        <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Messages Icon" aria-hidden="true">
+                    </div>
+                    <div class="quick-link-title">Contact Teacher</div>
+                    <div class="quick-link-description">Send messages</div>
+                </a>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div>
+                    <div class="dashboard-card" role="region" aria-label="Course progress overview">
+                        <div class="card-header">
+                            <div class="card-title">Course Progress Overview</div>
+                            <a href="#" class="card-action">View Details</a>
+                        </div>
+                        <div class="card-content">
+                            <div class="progress-chart">
+                                <canvas id="progressChart" aria-label="Course progress chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card" role="region" aria-label="Recent activities" style="position: relative; top: 2rem;">
+                        <div class="card-header">
+                            <div class="card-title">Recent Activities</div>
+                            <a href="#" class="card-action">View All</a>
+                        </div>
+                        <div class="card-content">
+                            <ul class="recent-activity">
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-green">
+                                        <img src="../assets/images/upload.png" alt="Assignment Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Submitted Math homework</div>
+                                        <div class="activity-time">30 minutes ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-blue">
+                                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Grades Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Received grade for Science quiz (92%)</div>
+                                        <div class="activity-time">2 hours ago</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-orange">
+                                        <img src="../assets/images/mail_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Messages Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">New message from History teacher</div>
+                                        <div class="activity-time">Yesterday</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-green">
+                                        <img src="../assets/images/door_open_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Courses Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Enrolled in Advanced Biology</div>
+                                        <div class="activity-time">Yesterday</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="dashboard-card" role="region" aria-label="Upcoming schedule">
+                        <div class="card-header">
+                            <div class="card-title">Upcoming Schedule</div>
+                            <a href="#" class="card-action">View Full Schedule</a>
+                        </div>
+                        <div class="card-content">
+                            <ul class="upcoming-events">
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">28</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Math Class</div>
+                                        <div class="event-time">
+                                            9:00 AM - 10:00 AM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">28</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">Science Quiz</div>
+                                        <div class="event-time">
+                                            11:00 AM - 12:00 PM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">29</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">History Assignment Due</div>
+                                        <div class="event-time">
+                                            11:59 PM
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">30</div>
+                                        <div class="event-month">Apr</div>
+                                    </div>
+                                    <div class="event-details">
+                                        <div class="event-title">English Class</div>
+                                        <div class="event-time">
+                                            10:00 AM - 11:00 AM
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card" role="region" aria-label="Student tasks" style="position: relative; top: 2rem;">
+                        <div class="card-header">
+                            <div class="card-title">Tasks</div>
+                            <a href="#" class="card-action">View All</a>
+                        </div>
+                        <div class="card-content">
+                            <ul class="recent-activity">
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-blue">
+                                        <img src="../assets/images/upload.png" alt="Task Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Complete Math homework</div>
+                                        <div class="activity-time">Due today</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-green">
+                                        <img src="../assets/images/quiz_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Task Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Prepare for Science quiz</div>
+                                        <div class="activity-time">Due tomorrow</div>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <div class="activity-icon icon-orange">
+                                        <img src="../assets/images/assignment.png" alt="Task Icon" aria-hidden="true">
+                                    </div>
+                                    <div class="activity-details">
+                                        <div class="activity-title">Submit History essay</div>
+                                        <div class="activity-time">Due in 2 days</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.querySelector('.toggle-sidebar');
+            
+            if (window.innerWidth <= 768 && !sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            
+            const progressData = {
+                labels: ['Math', 'Science', 'English', 'History', 'Biology', 'Art'],
+                datasets: [
+                    {
+                        label: 'Course Progress (%)',
+                        data: [75, 60, 90, 45, 80, 30],
+                        backgroundColor: 'rgba(123, 50, 206, 0.5)',
+                        borderColor: 'rgba(123, 50, 206, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            };
+            
+            const progressChart = new Chart(ctx, {
+                type: 'bar',
+                data: progressData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: {
+                                display: true,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

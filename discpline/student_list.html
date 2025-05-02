@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Search</title>
-    <link rel="stylesheet" href="disci.css"> 
+    <!-- <link rel="stylesheet" href="dc:\Users\user\Downloads\our-project\our-project\disci.css c:\Users\user\Downloads\our-project\our-project\disci.jss">  -->
+     <link rel="stylesheet" href="./disci.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -12,6 +13,7 @@
 <body>
 
 <h1>Search for a Student</h1>
+<button><a href="./dashboard.html"><img src="../assets/images/skip.png" alt=""></a></button>
 <input type="text" id="search-box" placeholder="Enter student name..." onkeyup="filterTable()">
 <i class="fas fa-search" id="search"></i>
 <br>
@@ -77,29 +79,7 @@
         <tr><td>Benjamin Mugisha</td><td>Year 2 A</td><td contenteditable="true">82</td><td contenteditable="true">2</td><td contenteditable="true">80</td></tr>
     </tbody>
 </table>
+<script src="./disci.js"></script>
 </body>
 </html>
-<script>
-    function filterTable() {
-        const searchBox = document.getElementById('search-box');
-        const filter = searchBox.value.toLowerCase();
-        const table = document.getElementById('studentTable');
-        const rows = table.getElementsByTagName('tr');
 
-        for (let i = 1; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            let found = false;
-
-            for (let j = 0; j < cells.length; j++) {
-                if (cells[j]) {
-                    const cellValue = cells[j].textContent || cells[j].innerText;
-                    if (cellValue.toLowerCase().indexOf(filter) > -1) {
-                        found = true;
-                        break;
-                    }
-                }
-            }
-
-            rows[i].style.display = found ? '' : 'none';
-        }
-    }
